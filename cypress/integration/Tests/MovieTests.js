@@ -6,7 +6,7 @@ describe('TMdb Tests', function () {
     cy.server()
   })
 
-  it('First Test', function () {
+  it('Second most popular TV show info loaded', function () {
     cy.get('.no_click.k-link.k-menu-link').contains('TV Shows').trigger('mouseover')
     cy.get('.k-group.k-menu-group.k-popup.k-reset.k-state-border-up').contains('Popular').click()
     // asserting page header
@@ -69,7 +69,7 @@ describe('TMdb Tests', function () {
     })
   })
 
-  it('Second Test', function () {
+  it('Oldest documentary\'s videos correctly counted', function () {
     cy.route('POST', '/discover/movie').as('movie')
     cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
     cy.get('.no_click.k-link.k-menu-link').contains('Movies').trigger('mouseover')
