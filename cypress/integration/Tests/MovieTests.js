@@ -12,20 +12,6 @@ describe('Movie Tests', function () {
     // asserting page header
     cy.log('ASSERTING PAGE HEADER')
     cy.get('.title').should('contain', 'Popular TV Shows')
-    // if page isn't sorted by popularity descending
-    cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').then(($e1) => {
-      if ($e1.find('.k-input').text() != 'Popularity Descending') {
-        cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').trigger('click')
-        cy.get('#sort_by_listbox')
-          .find('.k-item')
-          .each(($e2) => {
-            if ($e2.text() == 'Popularity Descending') {
-              $e2.trigger('click')
-            }
-          })
-        cy.get('.no_click.load_more').contains('Search').click()
-      }
-    })
     // choose second most popular tv show
     cy.get('.card.style_1').eq(1).click()
     // asserting series overview
