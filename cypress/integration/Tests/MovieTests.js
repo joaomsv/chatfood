@@ -2,7 +2,7 @@
 
 describe('Movie Tests', function () {
   beforeEach(function () {
-    cy.visit('https://www.themoviedb.org/')
+    cy.visit('/')
     cy.server()
   })
 
