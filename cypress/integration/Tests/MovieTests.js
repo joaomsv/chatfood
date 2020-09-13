@@ -31,15 +31,20 @@ describe('Movie Tests', function () {
     // asserting series overview
     cy.log('ASSERTING SERIES OVERVIEW')
     cy.get('.header.poster').then(($e1) => {
-      expect($e1.find('.7')).to.contain('Lucifer')
+      expect($e1.find('.7 a')).to.contain('Lucifer')
+      expect($e1.find('.7 a')).have.attr('href','/tv/63174-lucifer')
+      expect($e1.find('.7 .tag')).to.contain('(2016)')
+      expect($e1.find('.certification')).to.contain('16')
       expect($e1.find('.genres')).to.contain('Crime')
       expect($e1.find('.genres')).to.contain('Sci-Fi & Fantasy')
       expect($e1.find('.runtime')).to.contain('45m')
       expect($e1.find('.tagline')).to.contain("It's good to be bad.")
+      expect($e1.find('[dir="auto"]')).to.contain("Overview")
       expect($e1.find('.overview p').text()).to.contain(
         "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals.\xa0But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape."
       )
       expect($e1.find('.profile a').text()).to.contain('Tom Kapinos')
+      expect($e1.find('.character').text()).to.contain('Creator')
     })
     // asserting the first cast member
     cy.log('ASSERTING FIRST CAST MEMBER')
@@ -53,6 +58,7 @@ describe('Movie Tests', function () {
       })
     // asserting current season
     cy.log('ASSERTING CURRENT SEASON')
+    cy.get('.group_dropdown').should('contain','Current Season')
     cy.get('.season.card').then(($e1) => {
       expect($e1.find('h2')).to.contain('Season 5')
       expect($e1.find('h4')).to.contain('2020 | 8 Episodes')
@@ -60,11 +66,17 @@ describe('Movie Tests', function () {
         'Lucifer makes a tumultuous return to the land of the living in hopes of making things right with Chloe. A devil’s work is never done.'
       )
     })
+    cy.get('.new_button').contains('View All Seasons').should('have.attr','href','/tv/63174-lucifer/seasons')
     // asserting facts
     cy.log('ASSERTING FACTS')
     cy.get('.facts.left_column').then(($e1) => {
+      expect($e1.find('h4')).to.contain('Facts')
+      expect($e1.find('p').eq(0).find('strong')).to.contain('Status')
       expect($e1.find('p').eq(0)).to.contain('Returning Series')
+      expect($e1.find('.no_bottom_pad')).to.contain('Networks')
+      expect($e1.find('p').eq(2).find('strong')).to.contain('Type')
       expect($e1.find('p').eq(2)).to.contain('Scripted')
+      expect($e1.find('p').eq(3).find('strong')).to.contain('Original Language')
       expect($e1.find('p').eq(3)).to.contain('English')
     })
   })
