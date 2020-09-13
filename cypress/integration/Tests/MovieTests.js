@@ -1,3 +1,4 @@
+import MoviePage from '../../pageObjects/MoviePage'
 /// <reference types="Cypress" />
 import Navbar from '../../pageObjects/Navbar'
 import PopularPage from '../../pageObjects/PopularPage'
@@ -74,6 +75,7 @@ describe('Movie Tests', function () {
   it("Oldest documentary's videos correctly counted", function () {
     const navbar = new Navbar()
     const popularPage = new PopularPage()
+    const moviePage = new MoviePage()
 
     cy.route('POST', '/discover/movie').as('movie')
     cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
@@ -90,11 +92,11 @@ describe('Movie Tests', function () {
     cy.wait('@movie').its('status').should('eq', 200)
     popularPage.getCard().first().click()
     // compare both numbers
-    cy.get('#videos').click()
+    moviePage.getMediaVideos().click()
     // wait to load videos
     cy.wait('@loadVideos').its('status').should('eq', 200)
     // cy.get('@loadVideos')
-    cy.get('#videos span').then(($e1) => {
+    moviePage.getMediaVideosCounter().then(($e1) => {
       expect(Number($e1.text())).to.eq(Cypress.$('.video.card.no_border').length)
     })
   })
