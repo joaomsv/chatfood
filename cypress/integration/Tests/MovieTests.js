@@ -6,7 +6,7 @@ describe('Movie Tests', function () {
     cy.server()
   })
 
-  it('Second most popular TV show info loaded', function () {
+  it('Second most popular TV show info loads', function () {
     cy.get('.no_click.k-link.k-menu-link').contains('TV Shows').trigger('mouseover')
     cy.get('.k-group.k-menu-group.k-popup.k-reset.k-state-border-up').contains('Popular').click()
     // asserting page header
