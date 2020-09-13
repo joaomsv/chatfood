@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import Navbar from '../../pageObjects/Navbar'
 
 describe('Movie Tests', function () {
   beforeEach(function () {
@@ -7,8 +8,9 @@ describe('Movie Tests', function () {
   })
 
   it('Second most popular TV show info loads', function () {
-    cy.get('.no_click.k-link.k-menu-link').contains('TV Shows').trigger('mouseover')
-    cy.get('.k-group.k-menu-group.k-popup.k-reset.k-state-border-up').contains('Popular').click()
+    const navbar = new Navbar()
+
+    navbar.getPopularTVShows().click()
     // asserting page header
     cy.log('ASSERTING PAGE HEADER')
     cy.get('.title').should('contain', 'Popular TV Shows')
@@ -18,14 +20,14 @@ describe('Movie Tests', function () {
     cy.log('ASSERTING SERIES OVERVIEW')
     cy.get('.header.poster').then(($e1) => {
       expect($e1.find('.7 a')).to.contain('Lucifer')
-      expect($e1.find('.7 a')).have.attr('href','/tv/63174-lucifer')
+      expect($e1.find('.7 a')).have.attr('href', '/tv/63174-lucifer')
       expect($e1.find('.7 .tag')).to.contain('(2016)')
       expect($e1.find('.certification')).to.contain('16')
       expect($e1.find('.genres')).to.contain('Crime')
       expect($e1.find('.genres')).to.contain('Sci-Fi & Fantasy')
       expect($e1.find('.runtime')).to.contain('45m')
       expect($e1.find('.tagline')).to.contain("It's good to be bad.")
-      expect($e1.find('[dir="auto"]')).to.contain("Overview")
+      expect($e1.find('[dir="auto"]')).to.contain('Overview')
       expect($e1.find('.overview p').text()).to.contain(
         "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals.\xa0But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape."
       )
@@ -44,7 +46,7 @@ describe('Movie Tests', function () {
       })
     // asserting current season
     cy.log('ASSERTING CURRENT SEASON')
-    cy.get('.group_dropdown').should('contain','Current Season')
+    cy.get('.group_dropdown').should('contain', 'Current Season')
     cy.get('.season.card').then(($e1) => {
       expect($e1.find('h2')).to.contain('Season 5')
       expect($e1.find('h4')).to.contain('2020 | 8 Episodes')
@@ -52,7 +54,7 @@ describe('Movie Tests', function () {
         'Lucifer makes a tumultuous return to the land of the living in hopes of making things right with Chloe. A devil’s work is never done.'
       )
     })
-    cy.get('.new_button').contains('View All Seasons').should('have.attr','href','/tv/63174-lucifer/seasons')
+    cy.get('.new_button').contains('View All Seasons').should('have.attr', 'href', '/tv/63174-lucifer/seasons')
     // asserting facts
     cy.log('ASSERTING FACTS')
     cy.get('.facts.left_column').then(($e1) => {
@@ -67,11 +69,12 @@ describe('Movie Tests', function () {
     })
   })
 
-  it('Oldest documentary\'s videos correctly counted', function () {
+  it("Oldest documentary's videos correctly counted", function () {
+    const navbar = new Navbar()
+
     cy.route('POST', '/discover/movie').as('movie')
     cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
-    cy.get('.no_click.k-link.k-menu-link').contains('Movies').trigger('mouseover')
-    cy.get('.k-group.k-menu-group.k-popup.k-reset.k-state-border-up').contains('Popular').click()
+    navbar.getPopularMovies().click()
     // asserting page header
     cy.log('ASSERTING PAGE HEADER')
     cy.get('.title').should('contain', 'Popular Movies')
