@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('TMdb Tests', function () {
+describe('Movie Tests', function () {
   beforeEach(function () {
     cy.visit('https://www.themoviedb.org/')
     cy.server()
