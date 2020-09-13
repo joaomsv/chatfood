@@ -68,5 +68,41 @@ describe('TMdb Tests', function () {
       expect($e1.find('p').eq(3)).to.contain('English')
     })
   })
-  //   it('Second Test', function () {})
+
+  it('Second Test', function () {
+    cy.route('POST', '/discover/movie').as('movie')
+    cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
+    cy.get('.no_click.k-link.k-menu-link').contains('Movies').trigger('mouseover')
+    cy.get('.k-group.k-menu-group.k-popup.k-reset.k-state-border-up').contains('Popular').click()
+    // asserting page header
+    cy.log('ASSERTING PAGE HEADER')
+    cy.get('.title').should('contain', 'Popular Movies')
+    // if page isn't sorted by Release Date Ascending
+    cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').then(($e1) => {
+      if ($e1.find('.k-input').text() != 'Release Date Ascending') {
+        cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').trigger('click')
+        cy.get('#sort_by_listbox')
+          .find('.k-item')
+          .each(($e2) => {
+            if ($e2.text() == 'Release Date Ascending') {
+              $e2.trigger('click')
+            }
+          })
+      }
+    })
+    cy.get('.name').contains('Filters').click()
+    cy.get('.filter').find('#with_genres').contains('Documentary').click()
+    cy.get('.no_click.load_more').contains('Search').click()
+    // waits for api to finish
+    cy.wait('@movie').its('status').should('eq', 200)
+    cy.get('.card.style_1').first().click()
+    // compare both numbers
+    cy.get('#videos').click()
+    // wait to load videos
+    cy.wait('@loadVideos').its('status').should('eq', 200)
+    // cy.get('@loadVideos')
+    cy.get('#videos span').then(($e1) => {
+      expect(Number($e1.text())).to.eq(Cypress.$('.video.card.no_border').length)
+    })
+  })
 })
