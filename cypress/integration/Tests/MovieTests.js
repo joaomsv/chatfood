@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 import Navbar from '../../pageObjects/Navbar'
+import PopularPage from '../../pageObjects/PopularPage'
 
 describe('Movie Tests', function () {
   beforeEach(function () {
@@ -9,13 +10,14 @@ describe('Movie Tests', function () {
 
   it('Second most popular TV show info loads', function () {
     const navbar = new Navbar()
+    const popularPage = new PopularPage()
 
     navbar.getPopularTVShows().click()
     // asserting page header
     cy.log('ASSERTING PAGE HEADER')
-    cy.get('.title').should('contain', 'Popular TV Shows')
+    popularPage.getGetPageHeader().should('contain', 'Popular TV Shows')
     // choose second most popular tv show
-    cy.get('.card.style_1').eq(1).click()
+    popularPage.getCard().eq(1).click()
     // asserting series overview
     cy.log('ASSERTING SERIES OVERVIEW')
     cy.get('.header.poster').then(($e1) => {
@@ -71,32 +73,22 @@ describe('Movie Tests', function () {
 
   it("Oldest documentary's videos correctly counted", function () {
     const navbar = new Navbar()
+    const popularPage = new PopularPage()
 
     cy.route('POST', '/discover/movie').as('movie')
     cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
     navbar.getPopularMovies().click()
     // asserting page header
     cy.log('ASSERTING PAGE HEADER')
-    cy.get('.title').should('contain', 'Popular Movies')
+    popularPage.getGetPageHeader().should('contain', 'Popular Movies')
     // if page isn't sorted by Release Date Ascending
-    cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').then(($e1) => {
-      if ($e1.find('.k-input').text() != 'Release Date Ascending') {
-        cy.get('.k-widget.k-dropdown.kendo_dropdown.full_width.font_size_1').trigger('click')
-        cy.get('#sort_by_listbox')
-          .find('.k-item')
-          .each(($e2) => {
-            if ($e2.text() == 'Release Date Ascending') {
-              $e2.trigger('click')
-            }
-          })
-      }
-    })
-    cy.get('.name').contains('Filters').click()
-    cy.get('.filter').find('#with_genres').contains('Documentary').click()
-    cy.get('.no_click.load_more').contains('Search').click()
+    popularPage.setSortResultsBy('Release Date Ascending')
+    popularPage.getFilters().click()
+    popularPage.setGenre('Documentary')
+    popularPage.getSearchBtn().click()
     // waits for api to finish
     cy.wait('@movie').its('status').should('eq', 200)
-    cy.get('.card.style_1').first().click()
+    popularPage.getCard().first().click()
     // compare both numbers
     cy.get('#videos').click()
     // wait to load videos
