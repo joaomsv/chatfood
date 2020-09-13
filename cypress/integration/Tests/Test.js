@@ -30,13 +30,15 @@ describe('TMdb Tests', function () {
     cy.get('.card.style_1').eq(1).click()
     // asserting series overview
     cy.log('ASSERTING SERIES OVERVIEW')
-    cy.get('.header.poster').then($e1=>{
+    cy.get('.header.poster').then(($e1) => {
       expect($e1.find('.7')).to.contain('Lucifer')
       expect($e1.find('.genres')).to.contain('Crime')
       expect($e1.find('.genres')).to.contain('Sci-Fi & Fantasy')
       expect($e1.find('.runtime')).to.contain('45m')
-      expect($e1.find('.tagline')).to.contain('It\'s good to be bad.')
-      expect($e1.find('.overview p').text()).to.contain('Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals.\xa0But the longer he\'s away from the underworld, the greater the threat that the worst of humanity could escape.')
+      expect($e1.find('.tagline')).to.contain("It's good to be bad.")
+      expect($e1.find('.overview p').text()).to.contain(
+        "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals.\xa0But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape."
+      )
       expect($e1.find('.profile a').text()).to.contain('Tom Kapinos')
     })
     // asserting the first cast member
@@ -60,7 +62,7 @@ describe('TMdb Tests', function () {
     })
     // asserting facts
     cy.log('ASSERTING FACTS')
-    cy.get('.facts.left_column').then($e1=>{
+    cy.get('.facts.left_column').then(($e1) => {
       expect($e1.find('p').eq(0)).to.contain('Returning Series')
       expect($e1.find('p').eq(2)).to.contain('Scripted')
       expect($e1.find('p').eq(3)).to.contain('English')
