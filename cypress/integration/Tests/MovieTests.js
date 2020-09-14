@@ -2,6 +2,7 @@ import MoviePage from '../../pageObjects/MoviePage'
 /// <reference types="Cypress" />
 import Navbar from '../../pageObjects/Navbar'
 import PopularPage from '../../pageObjects/PopularPage'
+import SeriesPage from '../../pageObjects/SeriesPage'
 
 describe('Movie Tests', function () {
   beforeEach(function () {
@@ -12,6 +13,7 @@ describe('Movie Tests', function () {
   it('Second most popular TV show info loads', function () {
     const navbar = new Navbar()
     const popularPage = new PopularPage()
+    const seriesPage = new SeriesPage()
 
     navbar.getPopularTVShows().click()
     // asserting page header
@@ -21,7 +23,7 @@ describe('Movie Tests', function () {
     popularPage.getCard().eq(1).click()
     // asserting series overview
     cy.log('ASSERTING SERIES OVERVIEW')
-    cy.get('.header.poster').then(($e1) => {
+    seriesPage.getSeriesOverviewSection().then(($e1) => {
       expect($e1.find('.7 a')).to.contain('Lucifer')
       expect($e1.find('.7 a')).have.attr('href', '/tv/63174-lucifer')
       expect($e1.find('.7 .tag')).to.contain('(2016)')
@@ -39,8 +41,8 @@ describe('Movie Tests', function () {
     })
     // asserting the first cast member
     cy.log('ASSERTING FIRST CAST MEMBER')
-    cy.get('#cast_scroller')
-      .find('.card')
+    seriesPage
+      .getCastMembers()
       .first()
       .then(($e1) => {
         expect($e1.find('p').first().text()).to.contain('Tom Ellis')
@@ -49,18 +51,18 @@ describe('Movie Tests', function () {
       })
     // asserting current season
     cy.log('ASSERTING CURRENT SEASON')
-    cy.get('.group_dropdown').should('contain', 'Current Season')
-    cy.get('.season.card').then(($e1) => {
+    seriesPage.getSeasonHeader().should('contain', 'Current Season')
+    seriesPage.getSeasonInfo().then(($e1) => {
       expect($e1.find('h2')).to.contain('Season 5')
       expect($e1.find('h4')).to.contain('2020 | 8 Episodes')
       expect($e1.find('.season_overview')).to.contain(
         'Lucifer makes a tumultuous return to the land of the living in hopes of making things right with Chloe. A devil’s work is never done.'
       )
     })
-    cy.get('.new_button').contains('View All Seasons').should('have.attr', 'href', '/tv/63174-lucifer/seasons')
+    seriesPage.getViewAllSeasonsLink().should('have.attr', 'href', '/tv/63174-lucifer/seasons')
     // asserting facts
     cy.log('ASSERTING FACTS')
-    cy.get('.facts.left_column').then(($e1) => {
+    seriesPage.getFactsSection().then(($e1) => {
       expect($e1.find('h4')).to.contain('Facts')
       expect($e1.find('p').eq(0).find('strong')).to.contain('Status')
       expect($e1.find('p').eq(0)).to.contain('Returning Series')
