@@ -38,6 +38,7 @@ describe('Movie Tests', function () {
       expect($e1.find('.character').text()).to.contain('Creator')
     })
     // asserting the first cast member
+    seriesPage.getCastMembersHeader().should('contain', 'Series Cast')
     seriesPage
       .getCastMembers()
       .first()
@@ -46,6 +47,7 @@ describe('Movie Tests', function () {
         expect($e1.find('.character').text()).to.contain('Michael, Lucifer Morningstar')
         expect($e1.find('.episode_count').text()).to.contain('75 Episodes')
       })
+    seriesPage.getFullCastCrewLink().should('have.attr', 'href', '/tv/63174-lucifer/cast')
     // asserting current season
     seriesPage.getSeasonHeader().should('contain', 'Current Season')
     seriesPage.getSeasonInfo().then(($e1) => {
