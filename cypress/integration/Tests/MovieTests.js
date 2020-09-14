@@ -17,12 +17,10 @@ describe('Movie Tests', function () {
 
     navbar.getPopularTVShows().click()
     // asserting page header
-    cy.log('ASSERTING PAGE HEADER')
     popularPage.getGetPageHeader().should('contain', 'Popular TV Shows')
     // choose second most popular tv show
     popularPage.getCard().eq(1).click()
     // asserting series overview
-    cy.log('ASSERTING SERIES OVERVIEW')
     seriesPage.getSeriesOverviewSection().then(($e1) => {
       expect($e1.find('.7 a')).to.contain('Lucifer')
       expect($e1.find('.7 a')).have.attr('href', '/tv/63174-lucifer')
@@ -40,7 +38,6 @@ describe('Movie Tests', function () {
       expect($e1.find('.character').text()).to.contain('Creator')
     })
     // asserting the first cast member
-    cy.log('ASSERTING FIRST CAST MEMBER')
     seriesPage
       .getCastMembers()
       .first()
@@ -50,7 +47,6 @@ describe('Movie Tests', function () {
         expect($e1.find('.episode_count').text()).to.contain('75 Episodes')
       })
     // asserting current season
-    cy.log('ASSERTING CURRENT SEASON')
     seriesPage.getSeasonHeader().should('contain', 'Current Season')
     seriesPage.getSeasonInfo().then(($e1) => {
       expect($e1.find('h2')).to.contain('Season 5')
@@ -61,7 +57,6 @@ describe('Movie Tests', function () {
     })
     seriesPage.getViewAllSeasonsLink().should('have.attr', 'href', '/tv/63174-lucifer/seasons')
     // asserting facts
-    cy.log('ASSERTING FACTS')
     seriesPage.getFactsSection().then(($e1) => {
       expect($e1.find('h4')).to.contain('Facts')
       expect($e1.find('p').eq(0).find('strong')).to.contain('Status')
@@ -83,7 +78,6 @@ describe('Movie Tests', function () {
     cy.route('GET', '/movie/315946-passage-de-venus/remote/**').as('loadVideos')
     navbar.getPopularMovies().click()
     // asserting page header
-    cy.log('ASSERTING PAGE HEADER')
     popularPage.getGetPageHeader().should('contain', 'Popular Movies')
     // if page isn't sorted by Release Date Ascending
     popularPage.setSortResultsBy('Release Date Ascending')
