@@ -7,7 +7,7 @@ workflows:
       - cypress/run:
           store_artifacts: true
           post-steps:
-            - command: npm run merge_report
-            - command: npm run marge_report
+            - run: npm run merge_report
+            - run: npm run marge_report
             - store_artifacts:
                 path: cypress/reports/*.html
