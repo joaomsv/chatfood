@@ -6,8 +6,8 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "merge_report": "npx mochawesome-merge 'cypress/results/all/*.json' > cypress/results/mochawesome.json",
-    "marge_report": "npx marge cypress/results/mochawesome.json -o cypress/results/"
+    "merge_report": "npx mochawesome-merge 'cypress/results/*.json' > mochawesome.json",
+    "marge_report": "npx marge mochawesome.json -o cypress/reports"
   },
   "repository": {
     "type": "git",

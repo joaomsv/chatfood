@@ -4,3 +4,4 @@ cypress/videos
 mochawesome-report
 mochawesome.json
 cypress/results
+cypress/report
