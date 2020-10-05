@@ -19,6 +19,4 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-      - release:
-          requires:
-            - cypress/run
+      - release
