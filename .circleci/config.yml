@@ -19,4 +19,5 @@ workflows:
       - cypress/run:
           requires:
             - cypress/install
-      - release
+            post-steps:
+              - release
