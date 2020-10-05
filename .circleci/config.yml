@@ -9,5 +9,3 @@ workflows:
           post-steps:
             - run: npm run merge_report
             - run: npm run marge_report
-            - store_artifacts:
-                path: cypress/reports/
