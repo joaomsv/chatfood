@@ -1,19 +1,16 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
-jobs:
-  release:
-    executor: cypress/base-10
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: npm run merge_report
-      - run: npm run marge_report
-      - store_artifacts:
-          path: cypress/reports/
 
 workflows:
   build:
     jobs:
-      - cypress/run
-      - release
+      - cypress/run:
+          post-steps:
+            - run:
+                command: |
+                  npm run merge_report
+                  npm run marge_report
+                when: always
+            - store_artifacts:
+                path: cypress/reports/
