@@ -6,6 +6,5 @@ workflows:
     jobs:
       - cypress/run:
           store_artifacts: true
-          post-steps:
-            - run: npm run merge_report
-            - run: npm run marge_report
+      - run: npm run merge_report
+      - run: npm run marge_report
