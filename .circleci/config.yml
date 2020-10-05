@@ -14,4 +14,4 @@ workflows:
                   npm run marge_report
                 when: always
             - store_artifacts:
-                path: cypress/reports/mochawesome.html
+                path: cypress/reports/
