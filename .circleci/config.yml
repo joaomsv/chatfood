@@ -15,8 +15,10 @@ jobs:
 workflows:
   build:
     jobs:
+      - cypress/install
       - cypress/run:
-          store_artifacts: true
+          requires:
+            - cypress/install
       - release:
-          -requires:
+          requires:
             - cypress/run
