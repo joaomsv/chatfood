@@ -16,4 +16,5 @@ workflows:
                 when: always
             - store_artifacts:
                 path: cypress/reports/
-            - jira/notify
+            - jira/notify:
+                job_type: deployment
