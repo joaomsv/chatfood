@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
+  jira: circleci/jira@1.0.5
 
 workflows:
   build:
@@ -15,3 +16,4 @@ workflows:
                 when: always
             - store_artifacts:
                 path: cypress/reports/
+            - jira/notify
